@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ContactService } from '../contact.service';
+import { Store } from '@ngrx/store';
+import { SET_CONTACTS } from '../reducers/contacts-reducers';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -6,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-dialog.component.css'],
 })
 export class ContactDialogComponent implements OnInit {
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<ContactDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public contactData: any,
+    private contactService: ContactService,
+    private store: Store<any>
+  ) {}
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  getContacts() {
+    this.contactService.getContact().subscribe((res) => {
+      this.store.dispatch({ type: SET_CONTACTS, payload: res });
+      this.dialogRef.close();
+    });
   }
+
+  ngOnInit(): void {}
 }

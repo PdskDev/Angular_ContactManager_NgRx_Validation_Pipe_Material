@@ -1,20 +1,7 @@
-import { isDevMode } from '@angular/core';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
+import { contactsReducer } from './contacts-reducers';
+import { menuReducer } from './menu-reducer';
 
-
-export interface State {
-
-}
-
-export const reducers: ActionReducerMap<State> = {
-
+export const reducers = {
+  menu: menuReducer,
+  contacts: contactsReducer,
 };
-
-
-export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
